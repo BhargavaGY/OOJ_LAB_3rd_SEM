@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 abstract class Bank {
-    double bal = 0, min_bal = 500;
+    double bal = 0, interest = 0, min_bal;
     String name, ac_num;
 
     abstract void deposit();
@@ -9,6 +9,8 @@ abstract class Bank {
     abstract void withdraw();
 
     abstract void display();
+
+    abstract void cheque_book();
 }
 
 class Sav_acct extends Bank {
@@ -31,6 +33,7 @@ class Sav_acct extends Bank {
     }
 
     void withdraw() {
+        min_bal = 500;
         if (bal < min_bal)
             System.out.println("Low Balance!!");
         else {
@@ -48,6 +51,10 @@ class Sav_acct extends Bank {
 
         System.out.println("Savings account balance is Rs." + bal);
 
+    }
+
+    void cheque_book() {
+        System.out.println("Cheque book is not available for savings account");
     }
 }
 
@@ -68,7 +75,8 @@ class Curr_acct extends Bank {
 
     }
 
-    void display() {
+    void withdraw() {
+        min_bal = 1000;
         if (bal < min_bal)
             System.out.println("Low Balance!!");
         else {
@@ -82,9 +90,14 @@ class Curr_acct extends Bank {
 
     }
 
-    void withdraw() {
+    void display() {
         System.out.println("Savings account balance is Rs." + bal);
     }
+
+    void cheque_book() {
+        System.out.println("Cheque book is available for savings account");
+    }
+
 }
 
 class Account {
@@ -98,8 +111,9 @@ class Account {
             switch (c1) {
                 case 1: {
                     Sav_acct s = new Sav_acct();
-                    while (c2 != 4) {
-                        System.out.println("Enter your choice:\n1.Deposit\t\t2.Withdraw\t\t3.View Balance\t\t4.Exit");
+                    while (c2 != 5) {
+                        System.out.println(
+                                "Enter your choice:\n1.Deposit\t\t2.Withdraw\t\t3.View Balance\t\t4.Cheque Book\t\t5.Exit");
                         c2 = in.nextInt();
                         switch (c2) {
                             case 1:
@@ -110,6 +124,9 @@ class Account {
                                 break;
                             case 3:
                                 s.display();
+                                break;
+                            case 4:
+                                s.cheque_book();
                                 break;
 
                             default:
@@ -123,8 +140,9 @@ class Account {
 
                 case 2: {
                     Curr_acct c = new Curr_acct();
-                    while (c2 >= 0) {
-                        System.out.println("Enter your choice:\n1.Deposit\t\t2.Withdraw\t\t3.View Balance\t\t4.Exit");
+                    while (c2 != 5) {
+                        System.out.println(
+                                "Enter your choice:\n1.Deposit\t\t2.Withdraw\t\t3.View Balance\t\t4.Cheque Book\t\t5.Exit");
                         c2 = in.nextInt();
                         switch (c2) {
                             case 1:
@@ -135,6 +153,9 @@ class Account {
                                 break;
                             case 3:
                                 c.display();
+                                break;
+                            case 4:
+                                c.cheque_book();
                                 break;
 
                             default:
